@@ -1,0 +1,8 @@
+format: jb-book
+root: index.md
+parts:
+  - caption: IaaS
+    chapters:
+      - file: deploying_openstack/README.md
+      - file: deploying_k8s/README.md
+  
