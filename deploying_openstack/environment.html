@@ -1,0 +1,739 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>1. 创建虚拟机和安装系统 &#8212; 量潮云服务研发教程</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'deploying_openstack/environment';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">量潮云服务研发教程</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    引言
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">IaaS</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">部署OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploying_k8s/README.html">部署kubernetes</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/deploying_openstack/environment.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>1. 创建虚拟机和安装系统</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1. 创建虚拟机和安装系统</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2. 网络设置</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. 时间同步+周期性计划任务</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sql">SQL数据库</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">消息队列</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#memcached">MEMCACHED</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#etcd">Etcd</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <p>官方文档：<a class="reference external" href="https://docs.openstack.org/zed/install/">https://docs.openstack.org/zed/install/</a>
+参考链接：</p>
+<ol class="arabic simple">
+<li><p>trian：<a class="reference external" href="https://blog.csdn.net/qq_35456705/article/details/114962435">https://blog.csdn.net/qq_35456705/article/details/114962435</a></p></li>
+<li><p>yugo：<a class="reference external" href="https://computingforgeeks.com/install-and-configure-openstack-on-centos/">https://computingforgeeks.com/install-and-configure-openstack-on-centos/</a></p></li>
+</ol>
+<section id="id1">
+<h1>1. 创建虚拟机和安装系统<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>创建三台虚拟机，配置如下</p>
+<p><img alt="" src="../_images/VM_creation.png" /></p>
+<p>系统选择：
+Centos Linux 8 完全不支持，除非升级到Centos Stream 8
+Centos Linux 7 可以持续，但2024年6月30日也会停止维护。</p>
+<p>Ubuntu</p>
+<p>安装成功后，修改主机名并关闭防火墙</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">stop</span> <span class="n">firewalld</span> 
+<span class="n">systemctl</span> <span class="n">disable</span> <span class="n">firewalld</span> 
+<span class="n">setenforce</span> <span class="mi">0</span> <span class="c1">#永久关闭 </span>
+<span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">selinux</span> 
+<span class="n">SELINUX</span><span class="o">=</span><span class="n">disabled</span> <span class="c1">#重启后生效</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hostnamectl</span> <span class="nb">set</span><span class="o">-</span><span class="n">hostname</span> <span class="n">controller</span>
+<span class="n">su</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h1>2. 网络设置<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h1>
+<p>外网：eth0 内网 eth1
+控制节点：192.168.100.10（外网）192.168.200.10（内网）
+计算节点1：192.168.100.20（外网）192.168.200.20（内网）
+计算节点2：192.168.100.30（外网） 192.168.200.30（内网）
+网关 192.168.100.2</p>
+<p>在Install CentOS 7界面点击Tab键，在下方输入这两段配置字段<br />
+net.ifnames=0 biosdevname=0 (创建时可修改为从eth0开始的网卡）</p>
+<p>修改第一块网卡</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">network</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span>
+<span class="n">ls</span>
+<span class="n">vi</span> <span class="n">ifcfg</span><span class="o">-</span><span class="n">eth0</span>
+
+<span class="n">BOOTPROTO</span><span class="o">=</span><span class="n">static</span>			<span class="c1">#修改网卡配置参数，修改为静态IP</span>
+<span class="n">IPV4_ROUTE_METRIC</span><span class="o">=</span><span class="mi">90</span>		<span class="c1">#设置网卡优先级，默认100，越低优先级越高，防止出现两张网卡为了抢占优先级导致无法连接问题</span>
+
+<span class="n">ONBOOT</span><span class="o">=</span><span class="n">yes</span>					<span class="c1">#开启设备开机启动</span>
+<span class="n">IPADDR</span><span class="o">=</span><span class="mf">192.168.2.10</span>  		<span class="c1">#添加字段，静态模式IP自定义</span>
+<span class="n">NETMASK</span><span class="o">=</span><span class="mf">255.255.255.0</span>		<span class="c1">#添加字段，设置子网掩码</span>
+<span class="n">GATEWAY</span><span class="o">=</span><span class="mf">192.168.2.2</span>		<span class="c1">#添加字段，设置网关</span>
+<span class="c1">#DNS1=192.168.2.2   #选择添加字段，设置域名服务器，有些需要配置dns服务器，否则无法使用yum</span>
+
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">NetworkManager</span> <span class="c1">#Centos8</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">network</span> <span class="c1">#Centos7</span>
+<span class="n">ip</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>修改第二块网卡</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">network</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">ifcfg</span><span class="o">-</span><span class="n">eth1</span>
+<span class="n">BOOTPROTO</span><span class="o">=</span><span class="n">static</span>
+<span class="n">IPV4_ROUTE_METRIC</span><span class="o">=</span><span class="mi">100</span>  <span class="c1">#默认值为100，这里为了保险可以设置一下</span>
+<span class="n">ONBOOT</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">IPADDR</span><span class="o">=</span><span class="mf">192.168.100.10</span>
+<span class="n">NETMASK</span><span class="o">=</span><span class="mf">255.255.255.0</span>
+
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">NetworkManager</span> <span class="c1">#Centos8</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">network</span> <span class="c1">#Centos7</span>
+<span class="n">ip</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>配置host映射，映射地址为局域网ip
+控制节点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s1">&#39;192.168.200.10 controller&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span> 
+<span class="n">echo</span> <span class="s1">&#39;192.168.200.20 compute1&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span> 
+<span class="n">echo</span> <span class="s1">&#39;192.168.200.30 compute2&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span> 
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span>
+</pre></div>
+</div>
+<p>计算节点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s1">&#39;192.168.200.10 controller&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span> 
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span>
+</pre></div>
+</div>
+<p>三台节点做免交互<br />
+非对称密钥</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">rsa</span> <span class="c1">#全部回车默认</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">controller</span> 
+<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">compute1</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">compute2</span>
+</pre></div>
+</div>
+<p>安装依赖包</p>
+<p>如果Centos8 那么要先更新yum为国内源</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span>
+<span class="n">mkdir</span> <span class="n">backup</span> <span class="o">&amp;&amp;</span> <span class="n">mv</span> <span class="n">CentOS</span><span class="o">-</span><span class="n">Linux</span><span class="o">-*.</span><span class="n">repo</span> <span class="n">backup</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">Base</span><span class="o">-</span><span class="n">ali</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">Centos</span><span class="o">-</span><span class="mf">8.</span><span class="n">repo</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">wget</span>
+</pre></div>
+</div>
+<p>配置epel源：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>yum install -y epel-release
+
+vi /etc/yum.repos.d/epel.repo
+
+baseurl=https://mirrors.aliyun.com/epel/$releasever/Everything/$basearch
+#metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-$releasever&amp;arch=$basearch&amp;infra=$infra&amp;content=$contentdir
+
+dnf repolist epel -v
+</pre></div>
+</div>
+<p>然后执行以下命令</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> \ <span class="n">net</span><span class="o">-</span><span class="n">tools</span> \ <span class="n">bash</span><span class="o">-</span><span class="n">completion</span> \ <span class="n">vim</span> \ <span class="n">gcc</span> <span class="n">gcc</span><span class="o">-</span><span class="n">c</span><span class="o">++</span> \ <span class="n">make</span> \ <span class="n">pcre</span> <span class="n">pcre</span><span class="o">-</span><span class="n">devel</span> \ <span class="n">expat</span><span class="o">-</span><span class="n">devel</span> \ <span class="n">cmake</span> \ <span class="n">bzip2</span> \ <span class="n">lrzsz</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h1>2. 时间同步+周期性计划任务<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h1>
+<p>官方文档：<a class="reference external" href="https://docs.openstack.org/install-guide/environment-ntp.html">https://docs.openstack.org/install-guide/environment-ntp.html</a>
+**注意：<br />
+ct -&gt;同步阿里云时钟服务器<br />
+c1、c2 -&gt; 同步controller</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">resolv</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">nameserver</span> <span class="mf">114.114.114.114</span>
+
+<span class="n">yum</span> <span class="n">install</span> <span class="n">chrony</span> <span class="o">-</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>控制节点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">chrony</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">server</span> <span class="mf">0.</span><span class="n">centos</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">ntp</span><span class="o">.</span><span class="n">org</span> <span class="n">iburst</span>   <span class="c1">#注释掉</span>
+<span class="n">server</span> <span class="mf">1.</span><span class="n">centos</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">ntp</span><span class="o">.</span><span class="n">org</span> <span class="n">iburst</span>   <span class="c1">#注释掉</span>
+<span class="n">server</span> <span class="mf">2.</span><span class="n">centos</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">ntp</span><span class="o">.</span><span class="n">org</span> <span class="n">iburst</span>	  <span class="c1">#注释掉</span>
+<span class="n">server</span> <span class="mf">3.</span><span class="n">centos</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">ntp</span><span class="o">.</span><span class="n">org</span> <span class="n">iburst</span>	  <span class="c1">#注释掉</span>
+<span class="n">server</span> <span class="n">ntp6</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span> <span class="n">iburst</span>         <span class="c1">#配置阿里云时钟服务器源  </span>
+<span class="n">allow</span> <span class="mf">192.168.200.0</span><span class="o">/</span><span class="mi">24</span>     <span class="c1">#允许192.168.100.0/24网段的主机来同步时钟服务</span>
+
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">chronyd</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">chronyd</span>
+
+<span class="c1">#使用 chronyc sources 时间同步</span>
+<span class="n">chronyc</span> <span class="n">sources</span>
+</pre></div>
+</div>
+<p>计算节点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">chrony</span><span class="o">.</span><span class="n">conf</span> 
+<span class="n">server</span> <span class="mf">0.</span><span class="n">centos</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">ntp</span><span class="o">.</span><span class="n">org</span> <span class="n">iburst</span>	  <span class="c1">#注释掉</span>
+<span class="n">server</span> <span class="mf">1.</span><span class="n">centos</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">ntp</span><span class="o">.</span><span class="n">org</span> <span class="n">iburst</span>	  <span class="c1">#注释掉</span>
+<span class="n">server</span> <span class="mf">2.</span><span class="n">centos</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">ntp</span><span class="o">.</span><span class="n">org</span> <span class="n">iburst</span>   <span class="c1">#注释掉</span>
+<span class="n">server</span> <span class="mf">3.</span><span class="n">centos</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">ntp</span><span class="o">.</span><span class="n">org</span> <span class="n">iburst</span>   <span class="c1">#注释掉</span>
+<span class="n">server</span> <span class="n">controller</span> <span class="n">iburst</span>			          <span class="c1">#配置阿里云时钟服务器源，同步指向控制节点ct</span>
+
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">chronyd</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">chronyd</span><span class="o">.</span><span class="n">service</span>
+
+<span class="n">chronyc</span> <span class="n">sources</span>
+</pre></div>
+</div>
+<p>配置计划任务</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#配置计划任务，每隔2分钟同步一次 </span>
+<span class="n">crontab</span> <span class="o">-</span><span class="n">e</span> <span class="o">*/</span><span class="mi">2</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">chronyc</span> <span class="n">sources</span> <span class="o">&gt;&gt;/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">chronyc</span><span class="o">.</span><span class="n">log</span> 
+<span class="c1">#查看设置的周期性任务 </span>
+<span class="n">crontab</span> <span class="o">-</span><span class="n">l</span>
+</pre></div>
+</div>
+</section>
+<section id="sql">
+<h1>SQL数据库<a class="headerlink" href="#sql" title="Permalink to this heading">#</a></h1>
+<p>官方文档：<a class="reference external" href="https://docs.openstack.org/install-guide/environment-sql-database-rdo.html">https://docs.openstack.org/install-guide/environment-sql-database-rdo.html</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>yum -y install mariadb mariadb-server python2-PyMySQL libibverbs
+
+#---------模块解释---------------------------------
+mariadb：是mysql的一个分支，是一款完全兼容mysql的开源软件
+mariadb-server：数据库服务
+python2-PyMySQL：用于openstack的控制端连接mysql所需要的模块，如果不安装，则无法连接数据库；此包只安装在控制端
+libibverbs：远程直接内存访问
+
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">openstack</span><span class="o">.</span><span class="n">cnf</span>
+<span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+<span class="n">bind</span><span class="o">-</span><span class="n">address</span> <span class="o">=</span> <span class="mf">192.168.100.10</span>
+<span class="n">default</span><span class="o">-</span><span class="n">storage</span><span class="o">-</span><span class="n">engine</span> <span class="o">=</span> <span class="n">innodb</span>
+<span class="n">innodb_file_per_table</span> <span class="o">=</span> <span class="n">on</span>
+<span class="n">max_connections</span> <span class="o">=</span> <span class="mi">4096</span>
+<span class="n">collation</span><span class="o">-</span><span class="n">server</span> <span class="o">=</span> <span class="n">utf8_general_ci</span>
+<span class="n">character</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">server</span> <span class="o">=</span> <span class="n">utf8</span>
+
+<span class="c1">#---------配置解释---------------------------------------------</span>
+<span class="n">bind</span><span class="o">-</span><span class="n">address</span> <span class="o">=</span> <span class="mf">192.168.100.10</span>			<span class="c1">#控制节点局域网地址</span>
+<span class="n">default</span><span class="o">-</span><span class="n">storage</span><span class="o">-</span><span class="n">engine</span> <span class="o">=</span> <span class="n">innodb</span> 		<span class="c1">#默认存储引擎 </span>
+<span class="n">innodb_file_per_table</span> <span class="o">=</span> <span class="n">on</span> 				<span class="c1">#每张表独立表空间文件</span>
+<span class="n">max_connections</span> <span class="o">=</span> <span class="mi">4096</span> 				    <span class="c1">#最大连接数 </span>
+<span class="n">collation</span><span class="o">-</span><span class="n">server</span> <span class="o">=</span> <span class="n">utf8_general_ci</span> 		<span class="c1">#服务器校对时不区分大小写</span>
+<span class="n">character</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">server</span> <span class="o">=</span> <span class="n">utf8</span>             <span class="c1">#默认字符集 </span>
+<span class="c1">#---------------------------------------------------------------</span>
+
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">mariadb</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span>
+
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql_secure_installation</span>
+</pre></div>
+</div>
+<p><img alt="" src="../_images/MariaDB.png" /></p>
+</section>
+<section id="id4">
+<h1>消息队列<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h1>
+<p>官方文档：<a class="reference external" href="https://docs.openstack.org/install-guide/environment-messaging-rdo.html">https://docs.openstack.org/install-guide/environment-messaging-rdo.html</a></p>
+<p>官方采用的是Rabbitmq，但是centos8 安装有一堆坑。。。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">rabbitmq</span><span class="o">-</span><span class="n">server</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">rabbitmq</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">rabbitmq</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）创建消息队列用户,用于controler和 计算节点连接rabbitmq的认证（关联）
+rabbitmqctl add_user openstack RABBIT_PASS
+#-----------输出内容-------------
+Creating user &quot;openstack&quot;
+#----------------------------------
+
+2）配置openstack用户的操作权限(正则，配置读写权限
+rabbitmqctl set_permissions openstack &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;
+#------------输出内容---------------------------------------
+Setting permissions for user &quot;openstack&quot; in vhost &quot;/&quot;
+
+#可查看25672和5672 两个端口（5672是Rabbitmq默认端口，25672是Rabbit的测试工具CLI的端口）
+netstat -natp | grep 5672
+
+3）查看rabbitmq插件列表
+rabbitmq-plugins list
+
+4）开启rabbitmq的web管理界面的插件，端口为15672
+rabbitmq-plugins enable rabbitmq_management
+
+5）检查端口（25672 5672 15672）
+ss -natp | grep 5672
+
+</pre></div>
+</div>
+</section>
+<section id="memcached">
+<h1>MEMCACHED<a class="headerlink" href="#memcached" title="Permalink to this heading">#</a></h1>
+<p>安装memcached是用于存储session信息；服务身份验证机制（keystone）使用Memcached来缓存令牌 在登录openstack的dashboard时，会产生一些session信息，这些session信息会存放到memcached中</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">**</span><span class="n">For</span> <span class="n">CentOS</span> <span class="mi">7</span> <span class="ow">and</span> <span class="n">RHEL</span> <span class="mi">7</span><span class="o">**</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">memcached</span> <span class="n">python</span><span class="o">-</span><span class="n">memcached</span>
+
+<span class="o">**</span><span class="n">For</span> <span class="n">CentOS</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">RHEL</span> <span class="mi">8</span><span class="o">**</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">memcached</span> <span class="n">python3</span><span class="o">-</span><span class="n">memcached</span>
+
+<span class="c1">#python-*模块在OpenStack中起到连接数据库的作用</span>
+
+
+<span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">memcached</span>
+<span class="n">PORT</span><span class="o">=</span><span class="s2">&quot;11211&quot;</span>                      <span class="c1">#memcached端口11211</span>
+<span class="n">USER</span><span class="o">=</span><span class="s2">&quot;memcached&quot;</span>                  <span class="c1">#用户memcached</span>
+<span class="n">MAXCONN</span><span class="o">=</span><span class="s2">&quot;1024&quot;</span>                    <span class="c1">#最大连接数1024</span>
+<span class="n">CACHESIZE</span><span class="o">=</span><span class="s2">&quot;64&quot;</span>                    <span class="c1">#字符集大小64位</span>
+<span class="n">OPTIONS</span><span class="o">=</span><span class="s2">&quot;-l 127.0.0.1,::1,ct&quot;</span>     <span class="c1">#监听地址，127.0.0.1：本地地址，::是ipv6地址，ct是本地VMnet1地址</span>
+
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">memcached</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">memcached</span>
+<span class="n">netstat</span> <span class="o">-</span><span class="n">nautp</span> <span class="o">|</span> <span class="n">grep</span> <span class="mi">11211</span>
+
+</pre></div>
+</div>
+</section>
+<section id="etcd">
+<h1>Etcd<a class="headerlink" href="#etcd" title="Permalink to this heading">#</a></h1>
+<p>yum安装失败，参考以下链接：<a class="reference external" href="https://computingforgeeks.com/how-to-install-etcd-on-rhel-centos-rocky-almalinux/#google_vignette">https://computingforgeeks.com/how-to-install-etcd-on-rhel-centos-rocky-almalinux/#google_vignette</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">安装etcd</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">etcd</span>
+
+<span class="n">修改其配置文件</span>
+<span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">etcd</span><span class="o">/</span><span class="n">etcd</span><span class="o">.</span><span class="n">conf</span> 
+<span class="n">ETCD_DATA_DIR</span><span class="o">=</span><span class="s2">&quot;/var/lib/etcd/default.etcd&quot;</span>
+<span class="n">ETCD_LISTEN_PEER_URLS</span><span class="o">=</span><span class="s2">&quot;http://192.168.100.10:2380&quot;</span>
+<span class="n">ETCD_LISTEN_CLIENT_URLS</span><span class="o">=</span><span class="s2">&quot;http://192.168.100.10:2379&quot;</span>
+<span class="n">ETCD_NAME</span><span class="o">=</span><span class="s2">&quot;ct&quot;</span>
+<span class="n">ETCD_INITIAL_ADVERTISE_PEER_URLS</span><span class="o">=</span><span class="s2">&quot;http://192.168.100.10:2380&quot;</span>
+<span class="n">ETCD_ADVERTISE_CLIENT_URLS</span><span class="o">=</span><span class="s2">&quot;http://192.168.100.10:2379&quot;</span>
+<span class="n">ETCD_INITIAL_CLUSTER</span><span class="o">=</span><span class="s2">&quot;ct=http://192.168.100.10:2380&quot;</span>
+<span class="n">ETCD_INITIAL_CLUSTER_TOKEN</span><span class="o">=</span><span class="s2">&quot;etcd-cluster-01&quot;</span>
+<span class="n">ETCD_INITIAL_CLUSTER_STATE</span><span class="o">=</span><span class="s2">&quot;new&quot;</span>
+<span class="c1">#-------------------配置解释---------------------------------------</span>
+<span class="n">ETCD_DATA_DIR</span><span class="o">=</span><span class="s2">&quot;/var/lib/etcd/default.etcd&quot;</span>  <span class="c1">#数据目录位置</span>
+<span class="n">ETCD_LISTEN_PEER_URLS</span><span class="o">=</span><span class="s2">&quot;http://192.168.100.10:2380&quot;</span> <span class="c1">#监听其他etcd member的url（2380端口，集群之间通讯，域名为无效值）</span>
+<span class="n">ETCD_LISTEN_CLIENT_URLS</span><span class="o">=</span><span class="s2">&quot;http://192.168.100.10:2379&quot;</span> <span class="c1">#对外提供服务的地址（2379端口，集群内部的通讯端口）</span>
+<span class="n">ETCD_NAME</span><span class="o">=</span><span class="s2">&quot;ct&quot;</span> <span class="c1">#集群中节点标识（名称）</span>
+<span class="n">ETCD_INITIAL_ADVERTISE_PEER_URLS</span><span class="o">=</span><span class="s2">&quot;http://192.168.100.10:2380&quot;</span> <span class="c1">#该节点成员的URL地址，2380端口：用于集群之间通讯。</span>
+<span class="n">ETCD_ADVERTISE_CLIENT_URLS</span><span class="o">=</span><span class="s2">&quot;http://192.168.100.10:2379&quot;</span>
+<span class="n">ETCD_INITIAL_CLUSTER</span><span class="o">=</span><span class="s2">&quot;ct=http://192.168.100.10:2380&quot;</span>	
+<span class="n">ETCD_INITIAL_CLUSTER_TOKEN</span><span class="o">=</span><span class="s2">&quot;etcd-cluster-01&quot;</span>	<span class="c1">#集群唯一标识</span>
+<span class="n">ETCD_INITIAL_CLUSTER_STATE</span><span class="o">=</span><span class="s2">&quot;new&quot;</span>  <span class="c1">#初始集群状态，new为静态，若为existing，则表示此ETCD服务将尝试加入已有的集群若为DNS，则表示此集群将作为被加入的对象</span>
+<span class="c1">#-----------------------------------------------------------------------</span>
+
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">etcd</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">etcd</span><span class="o">.</span><span class="n">service</span>
+<span class="n">netstat</span> <span class="o">-</span><span class="n">anutp</span> <span class="o">|</span><span class="n">grep</span> <span class="mi">2379</span>
+<span class="n">netstat</span> <span class="o">-</span><span class="n">anutp</span> <span class="o">|</span><span class="n">grep</span> <span class="mi">2380</span>
+</pre></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./deploying_openstack"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1. 创建虚拟机和安装系统</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2. 网络设置</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. 时间同步+周期性计划任务</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sql">SQL数据库</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">消息队列</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#memcached">MEMCACHED</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#etcd">Etcd</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By 量潮科技
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
