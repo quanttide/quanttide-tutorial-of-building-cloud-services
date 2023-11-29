@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>3.2 安装 Glance（镜像服务） &#8212; 量潮云服务研发教程</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'deploying_openstack/3_installation_of_openstack/3.2_installation_of_glance';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">量潮云服务研发教程</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    引言
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">IaaS</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../README.html">部署OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deploying_k8s/README.html">部署kubernetes</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/deploying_openstack/3_installation_of_openstack/3.2_installation_of_glance.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>3.2 安装 Glance（镜像服务）</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="glance">
+<h1>3.2 安装 Glance（镜像服务）<a class="headerlink" href="#glance" title="Permalink to this heading">#</a></h1>
+<p>Step 1: 创建数据库并授权</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 登录mysql控制台，mysql -u root -pMariaDB密码，本教程采用的是root</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">proot</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 创建glance数据库</span>
+<span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">glance</span><span class="p">;</span>
+
+<span class="c1"># 授权本地访问</span>
+<span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">glance</span><span class="o">.*</span> <span class="n">TO</span> <span class="s1">&#39;glance&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> \
+<span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;glance&#39;</span><span class="p">;</span>
+
+<span class="c1"># 授权所有任意主机访问</span>
+<span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">glance</span><span class="o">.*</span> <span class="n">TO</span> <span class="s1">&#39;glance&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> \
+<span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;glance&#39;</span><span class="p">;</span>
+
+<span class="c1"># 刷新权限</span>
+<span class="o">&gt;</span> <span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+<span class="c1"># 查看数据库是否创建成功</span>
+<span class="o">&gt;</span> <span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
+<span class="c1"># 查看拥有访问权限的主机</span>
+<span class="o">&gt;</span> <span class="n">select</span> <span class="n">user</span><span class="p">,</span><span class="n">host</span> <span class="kn">from</span> <span class="nn">mysql.user</span><span class="p">;</span>
+<span class="c1"># 退出mysql控制台</span>
+<span class="o">&gt;</span> <span class="n">exit</span>
+</pre></div>
+</div>
+<p>Step 2：创建服务凭证</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd
+$ source admin-openrc.sh
+$ openstack user create --domain default --password=glance glance
+$ openstack user list
+
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ openstack role add --project service --user glance admin
+
+$ openstack service create --name glance --description &quot;OpenStack Image&quot; image
+$ openstack service list
+
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openstack</span> <span class="n">endpoint</span> <span class="n">create</span> <span class="o">--</span><span class="n">region</span> <span class="n">RegionOne</span> <span class="n">image</span> <span class="n">public</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">controller</span><span class="p">:</span><span class="mi">9292</span>
+<span class="n">openstack</span> <span class="n">endpoint</span> <span class="n">create</span> <span class="o">--</span><span class="n">region</span> <span class="n">RegionOne</span> <span class="n">image</span> <span class="n">internal</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">controller</span><span class="p">:</span><span class="mi">9292</span>
+<span class="n">openstack</span> <span class="n">endpoint</span> <span class="n">create</span> <span class="o">--</span><span class="n">region</span> <span class="n">RegionOne</span> <span class="n">image</span> <span class="n">admin</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">controller</span><span class="p">:</span><span class="mi">9292</span>
+
+<span class="n">查看API端点</span>
+<span class="n">openstack</span> <span class="n">endpoint</span> <span class="nb">list</span>
+</pre></div>
+</div>
+<p>Step 3：glance相关软件和安装</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 安装glance服务和依赖包
+$ yum install openstack-glance python-glance python-glanceclient -y
+</pre></div>
+</div>
+<p>Step 4：修改配置文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 修改/etc/glance/glance-api.conf配置文件
+$ cd
+$ touch controller-node-glance-api.conf.sh
+$ vim controller-node-glance-api.conf.sh
+$ bash controller-node-glance-api.conf.sh
+
+--------------controller-node-glance-api.conf.sh--------------------
+#!/bin/bash
+#controller-node-glance-api.conf.sh
+openstack-config --set  /etc/glance/glance-api.conf database connection  mysql+pymysql://glance:glance@controller/glance
+openstack-config --set  /etc/glance/glance-api.conf keystone_authtoken www_authenticate_uri http://controller:5000
+openstack-config --set  /etc/glance/glance-api.conf keystone_authtoken auth_url http://controller:5000
+openstack-config --set  /etc/glance/glance-api.conf keystone_authtoken memcached_servers  controller:11211
+openstack-config --set  /etc/glance/glance-api.conf keystone_authtoken auth_type password
+openstack-config --set  /etc/glance/glance-api.conf keystone_authtoken project_domain_name Default
+openstack-config --set  /etc/glance/glance-api.conf keystone_authtoken user_domain_name Default
+openstack-config --set  /etc/glance/glance-api.conf keystone_authtoken project_name service
+openstack-config --set  /etc/glance/glance-api.conf keystone_authtoken username glance
+openstack-config --set  /etc/glance/glance-api.conf keystone_authtoken password glance
+openstack-config --set  /etc/glance/glance-api.conf paste_deploy flavor keystone
+openstack-config --set  /etc/glance/glance-api.conf glance_store stores  file,http
+openstack-config --set  /etc/glance/glance-api.conf glance_store default_store file
+openstack-config --set  /etc/glance/glance-api.conf glance_store filesystem_store_datadir /var/lib/glance/images/
+echo &quot;Result of Configuration&quot;
+grep &#39;^[a-z]&#39; /etc/glance/glance-api.conf
+--------------------------------------------------------------------------------
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 修改/etc/glance/glance-registry.conf配置文件
+$ cd
+$ touch controller-node-glance-registry.conf.sh
+$ vim controller-node-glance-registry.conf.sh
+$ bash controller-node-glance-registry.conf.sh
+
+-------------------------controller-node-glance-registry.conf.sh------------------
+#!/bin/bash
+#controller-node-glance-registry.conf.sh
+openstack-config --set  /etc/glance/glance-registry.conf database connection mysql+pymysql://glance:glance@controller/glance
+openstack-config --set  /etc/glance/glance-registry.conf keystone_authtoken www_authenticate_uri http://controller:5000
+openstack-config --set  /etc/glance/glance-registry.conf keystone_authtoken auth_url http://controller:5000
+openstack-config --set  /etc/glance/glance-registry.conf keystone_authtoken memcached_servers controller:11211
+openstack-config --set  /etc/glance/glance-registry.conf keystone_authtoken auth_type password
+openstack-config --set  /etc/glance/glance-registry.conf keystone_authtoken project_domain_name Default
+openstack-config --set  /etc/glance/glance-registry.conf keystone_authtoken user_domain_name Default
+openstack-config --set  /etc/glance/glance-registry.conf keystone_authtoken project_name service
+openstack-config --set  /etc/glance/glance-registry.conf keystone_authtoken username glance
+openstack-config --set  /etc/glance/glance-registry.conf keystone_authtoken password glance
+openstack-config --set  /etc/glance/glance-registry.conf paste_deploy flavor keystone
+echo &quot;Result of Configuration&quot;
+grep &#39;^[a-z]&#39; /etc/glance/glance-registry.conf
+------------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>Step 5：同步glance数据库</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 同步glance数据库
+$ su -s /bin/sh -c &quot;glance-manage db_sync&quot; glance
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 测试是否同步成功
+$ mysql -uglance -pglance -e &quot;use glance;show tables;&quot;
+</pre></div>
+</div>
+<p>Step 6： 启动镜像服务</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ systemctl start openstack-glance-api.service openstack-glance-registry.service
+$ systemctl status openstack-glance-api.service openstack-glance-registry.service
+
+$ systemctl enable openstack-glance-api.service openstack-glance-registry.service
+$ systemctl list-unit-files |grep openstack-glance*
+</pre></div>
+</div>
+<p>Step 7：验证glance服务是否安装成功</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 下载镜像
+$ cd
+$ wget http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img
+$ wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+
+$ source admin-openrc.sh
+
+$ glance image-create --name &quot;cirros-0.4.0&quot; --file ./cirros-0.4.0-x86_64-disk.img  --disk-format qcow2 --container-format bare  --visibility public
+ $openstack image create &quot;cirros-0.3.5&quot;  --file ./cirros-0.3.5-x86_64-disk.img --disk-format qcow2 --container-format bare --public
+
+openstack image list
+
+</pre></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./deploying_openstack/3_installation_of_openstack"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By 量潮科技
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,653 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>2.3 环境配置 &#8212; 量潮云服务研发教程</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'deploying_openstack/2_environment_config/2.3_environment_settings';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">量潮云服务研发教程</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    引言
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">IaaS</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../README.html">部署OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deploying_k8s/README.html">部署kubernetes</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/deploying_openstack/2_environment_config/2.3_environment_settings.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2.3 环境配置</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.3.1 修改主机名和关闭防火墙</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1. 修改主机名</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2. 关闭防火墙</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.3.2 网卡设置</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.3.3 节点映射</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.3.4 免密交互</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ntp">2.3.5 时间同步 (NTP)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chrony">1. 安装chrony</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2. 修改配置文件</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3. 配置计划任务</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>2.3 环境配置<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>创建完虚拟机并安装完系统后，需要对控制节点和计算节点的系统环境进行配置修改。以下内容没有强调控制节点或计算节点的命令，属于两种节点都要进行的操作。</p>
+<section id="id2">
+<h2>2.3.1 修改主机名和关闭防火墙<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<section id="id3">
+<h3>1. 修改主机名<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>控制节点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 修改主机名
+$ hostnamectl set-hostname controller
+
+# 使主机名生效
+$ bash
+</pre></div>
+</div>
+<p>计算节点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 修改主机名
+$ hostnamectl set-hostname compute1
+
+# 使主机名生效
+$ bash
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>2. 关闭防火墙<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 关闭防火墙
+$ systemctl stop firewalld 
+$ systemctl disable firewalld 
+
+# 关闭selinux防火墙
+#临时关闭
+$ setenforce 0  
+# 用久关闭，需重启后生效
+$ vi /etc/sysconfig/selinux # 修改配置文件
+------
+SELINUX=disabled 
+------
+$ reboot
+
+# 查看selinux是否关闭
+$ getenforce
+</pre></div>
+</div>
+<p>注意：防火墙必须关闭，不然后续配置出错，尤其是重启服务报错，很可能是因为防火墙未关闭。</p>
+</section>
+</section>
+<section id="id5">
+<h2>2.3.2 网卡设置<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<p>节点ip地址必须修改为静态ip地址。首先，要找到网卡文件，一般为/etc/sysonfig/network-scripts/ifcfg-XXX，可以通过ip a命令查看网卡名称。</p>
+<p>控制节点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd /etc/sysconfig/network-scripts/
+$ ls
+$ vi ifcfg-ens33 # 配置文件修改如下
+------
+BOOTPROTO=static			#修改网卡配置参数，修改为静态IP
+IPV4_ROUTE_METRIC=90		#设置网卡优先级，默认100，越低优先级越高，防止出现两张网卡为了抢占优先级导致无法连接问题
+
+ONBOOT=yes					#开启设备开机启动
+IPADDR=192.168.100.10  		#添加字段，静态模式IP自定义
+NETMASK=255.255.255.0		#添加字段，设置子网掩码
+GATEWAY=192.168.100.2		#添加字段，设置网关
+DNS1=192.168.2.2   #选择添加字段，设置域名服务器，有些需要配置dns服务器，否则无法使用yum
+------
+
+# 重启服务以使配置生效
+$ systemctl restart NetworkManager #Centos8
+$ systemctl restart network #Centos7
+# 查看ip地址是否修改成功
+$ ip a
+</pre></div>
+</div>
+<p>计算节点的网卡设置同控制节点，但是ip地址设置与计算节点不同。</p>
+<p>计算节点1：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd /etc/sysconfig/network-scripts/
+$ ls
+$ vi ifcfg-eth0 # 配置文件修改如下
+------
+BOOTPROTO=static			#修改网卡配置参数，修改为静态IP
+IPV4_ROUTE_METRIC=90		#设置网卡优先级，默认100，越低优先级越高，防止出现两张网卡为了抢占优先级导致无法连接问题
+
+ONBOOT=yes					#开启设备开机启动
+IPADDR=192.168.100.20  		#添加字段，静态模式IP自定义
+NETMASK=255.255.255.0		#添加字段，设置子网掩码
+GATEWAY=192.168.100.2		#添加字段，设置网关
+DNS1=192.168.2.2   #选择添加字段，设置域名服务器，有些需要配置dns服务器，否则无法使用yum
+------
+
+# 重启服务以使配置生效
+$ systemctl restart NetworkManager #Centos8
+$ systemctl restart network #Centos7
+# 查看ip地址是否修改成功
+$ ip a
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>2.3.3 节点映射<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p>每个节点都必须做节点映射，这一步设置的节点名称将在后续部署当中用到。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ echo 192.168.100.10 controller &gt;&gt; /etc/hosts
+$ echo 192.168.100.20 compute1 &gt;&gt; /etc/hosts
+$ echo 192.168.100.30 compute2 &gt;&gt; /etc/hosts
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2>2.3.4 免密交互<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<p>这一步是让节点之间通过ssh服务免密交互，为可选配置。目前暂未发现缺失该步骤会对后续部署产生负面影响。</p>
+<p>控制节点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 生成密钥文件
+$ ssh-keygen -t rsa
+
+# 将密钥文件传输到控制节点
+$ ssh-copy-id controller
+# 验证免密交互是否设置成功
+$ ssh controller
+
+# 将密钥文件传输到计算节点1
+$ ssh-copy-id compute1
+$ scp -r .ssh compute1:~/
+$ ssh compute1
+
+# 将密钥文件传输到计算节点2
+$ ssh-copy-id compute2
+$ scp -r .ssh compute2:~/
+$ ssh compute1
+</pre></div>
+</div>
+<p>完成如上控制节点的免密交互设置后，计算节点和控制节点之间就能进行免密交互，但是计算节点之间仍不可进行免密交互，如有需要，须在计算节点上做相似的额外配置。</p>
+</section>
+<section id="ntp">
+<h2>2.3.5 时间同步 (NTP)<a class="headerlink" href="#ntp" title="Permalink to this heading">#</a></h2>
+<p>官方文档：<a class="reference external" href="https://docs.openstack.org/install-guide/environment-ntp.html">https://docs.openstack.org/install-guide/environment-ntp.html</a></p>
+<p>**注意：<br />
+controller -&gt;同步阿里云时钟服务器<br />
+compute1、compute2 -&gt; 同步controller</p>
+<section id="chrony">
+<h3>1. 安装chrony<a class="headerlink" href="#chrony" title="Permalink to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#配置DNS，以防访问不了阿里云源
+$ vi /etc/resolv.conf
+nameserver 114.114.114.114 
+
+# 安装chrony包
+$ yum install chrony -y
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3>2. 修改配置文件<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<p>控制节点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 修改时间同步配置文件
+$ vim /etc/chrony.conf
+
+# server 0.centos.pool.ntp.org iburst   #注释掉
+# server 1.centos.pool.ntp.org iburst   #注释掉
+# erver 2.centos.pool.ntp.org iburst	  #注释掉
+# server 3.centos.pool.ntp.org iburst	  #注释掉
+server ntp6.aliyun.com iburst         #配置阿里云时钟服务器源  
+allow 192.168.200.0/24     #允许192.168.100.0/24网段的主机来同步时钟服务
+
+# 重新启动时间同步服务以使配置生效
+$ systemctl enable chronyd
+$ systemctl restart chronyd
+
+#使用 chronyc sources 时间同步
+$ chronyc sources
+</pre></div>
+</div>
+<p>计算节点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vim /etc/chrony.conf 
+------
+server 0.centos.pool.ntp.org iburst	  #注释掉
+server 1.centos.pool.ntp.org iburst	  #注释掉
+server 2.centos.pool.ntp.org iburst   #注释掉
+server 3.centos.pool.ntp.org iburst   #注释掉
+server controller iburst			          #配置阿里云时钟服务器源，同步指向控制节点ct
+------
+
+# 重新启动时间同步服务以使配置生效
+$ systemctl enable chronyd.service
+$ systemctl restart chronyd.service
+
+#使用 chronyc sources 时间同步
+$ chronyc sources
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3>3. 配置计划任务<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#配置计划任务，每隔2分钟同步一次 
+$ crontab -e */2 * * * * /usr/bin/chronyc sources &gt;&gt;/var/log/chronyc.log 
+
+#查看设置的周期性任务 
+$ crontab -l
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./deploying_openstack/2_environment_config"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.3.1 修改主机名和关闭防火墙</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1. 修改主机名</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2. 关闭防火墙</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.3.2 网卡设置</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.3.3 节点映射</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.3.4 免密交互</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ntp">2.3.5 时间同步 (NTP)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chrony">1. 安装chrony</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2. 修改配置文件</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3. 配置计划任务</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By 量潮科技
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
