@@ -289,7 +289,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -305,6 +307,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.4.1 控制节点</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.4.2 计算节点</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.4.3 验证</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -316,6 +328,283 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="nova">
 <h1>3.4 安装 Nova（计算服务）<a class="headerlink" href="#nova" title="Permalink to this heading">#</a></h1>
+<section id="id1">
+<h2>3.4.1 控制节点<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>Step 1: 创建数据库并授权</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mysql -uroot -proot
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 创建数据库</span>
+<span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">nova_api</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">nova</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">nova_cell0</span><span class="p">;</span>
+
+<span class="c1"># 授权</span>
+<span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">nova_api</span><span class="o">.*</span> <span class="n">TO</span> <span class="s1">&#39;nova&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;nova&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">nova_api</span><span class="o">.*</span> <span class="n">TO</span> <span class="s1">&#39;nova&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;nova&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">nova</span><span class="o">.*</span> <span class="n">TO</span> <span class="s1">&#39;nova&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;nova&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">nova</span><span class="o">.*</span> <span class="n">TO</span> <span class="s1">&#39;nova&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;nova&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">nova_cell0</span><span class="o">.*</span> <span class="n">TO</span> <span class="s1">&#39;nova&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;nova&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">nova_cell0</span><span class="o">.*</span> <span class="n">TO</span> <span class="s1">&#39;nova&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;nova&#39;</span><span class="p">;</span>
+
+<span class="c1"># 验证是否授权成功</span>
+<span class="o">&gt;</span> <span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">select</span> <span class="n">user</span><span class="p">,</span><span class="n">host</span> <span class="kn">from</span> <span class="nn">mysql.user</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">exit</span>
+
+</pre></div>
+</div>
+<p>Step 2: 创建服务凭证</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd 
+$ source admin-openrc.sh
+
+# 创建nova用户
+$ openstack user create --domain default --password=nova nova
+$ openstack user list
+
+# 赋予nova用户管理员角色
+$ openstack role add --project service --user nova admin
+
+# 创建nova服务实体
+$ openstack service create --name nova --description &quot;OpenStack Compute&quot; compute
+openstack service list
+
+# 创建compute API服务端点
+$ openstack endpoint create --region RegionOne compute public http://controller:8774/v2.1
+$ openstack endpoint create --region RegionOne compute internal http://controller:8774/v2.1
+$ openstack endpoint create --region RegionOne compute admin http://controller:8774/v2.1
+
+# 查看服务端点
+$ openstack endpoint list
+</pre></div>
+</div>
+<p>Step 3: 安装nova相关软件并修改配置文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ yum install -y openstack-nova-api openstack-nova-conductor openstack-nova-novncproxy openstack-nova-scheduler
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 修改/etc/nova/nova.conf
+
+$ touch controller-node-nova.conf.sh
+$ vim controller-node-nova.conf.sh
+$ bash controller-node-nova.conf.sh
+
+--------------------controller-node-nova.conf.sh-----------------------
+#!/bin/bash
+#controller-node-nova.conf.sh
+openstack-config --set  /etc/nova/nova.conf DEFAULT enabled_apis  osapi_compute,metadata
+openstack-config --set  /etc/nova/nova.conf DEFAULT my_ip 192.168.1.81【注意修改为本机管理网的IP地址】
+openstack-config --set  /etc/nova/nova.conf DEFAULT use_neutron  true 
+openstack-config --set  /etc/nova/nova.conf DEFAULT firewall_driver  nova.virt.firewall.NoopFirewallDriver
+openstack-config --set  /etc/nova/nova.conf DEFAULT transport_url  rabbit://openstack:openstack@controller
+
+openstack-config --set  /etc/nova/nova.conf api_database connection  mysql+pymysql://nova:nova@controller/nova_api
+
+openstack-config --set  /etc/nova/nova.conf database connection  mysql+pymysql://nova:nova@controller/nova
+
+openstack-config --set  /etc/nova/nova.conf api auth_strategy  keystone 
+
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken www_authenticate_uri  http://controller:5000/
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken auth_url  http://controller:5000/
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken memcached_servers  controller:11211
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken auth_type  password
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken project_domain_name  default 
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken user_domain_name  default
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken project_name  service 
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken username  nova 
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken password  nova
+
+openstack-config --set  /etc/nova/nova.conf vnc enabled true
+openstack-config --set  /etc/nova/nova.conf vnc server_listen &#39;$my_ip&#39;
+openstack-config --set  /etc/nova/nova.conf vnc server_proxyclient_address &#39;$my_ip&#39;
+
+openstack-config --set  /etc/nova/nova.conf glance api_servers  http://controller:9292
+
+openstack-config --set  /etc/nova/nova.conf oslo_concurrency lock_path  /var/lib/nova/tmp 
+
+openstack-config --set  /etc/nova/nova.conf placement region_name RegionOne
+openstack-config --set  /etc/nova/nova.conf placement project_domain_name Default
+openstack-config --set  /etc/nova/nova.conf placement project_name service
+openstack-config --set  /etc/nova/nova.conf placement auth_type password
+openstack-config --set  /etc/nova/nova.conf placement user_domain_name Default
+openstack-config --set  /etc/nova/nova.conf placement auth_url http://controller:5000/v3
+openstack-config --set  /etc/nova/nova.conf placement username placement
+openstack-config --set  /etc/nova/nova.conf placement password placement
+
+openstack-config --set  /etc/nova/nova.conf scheduler discover_hosts_in_cells_interval 300
+echo &quot;Result of Configuration&quot;
+egrep -v &quot;^#|^$&quot; /etc/nova/nova.conf
+----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>Step 4: 同步数据库</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 填充nova-api数据库
+$ su -s /bin/sh -c &quot;nova-manage api_db sync&quot; nova
+# 验证数据库
+$ mysql -unova -pnova -e &quot;use nova_api;show tables;&quot;
+
+# 注册cell0数据库
+$ su -s /bin/sh -c &quot;nova-manage cell_v2 map_cell0&quot; nova
+# 创建cell1单元
+$ su -s /bin/sh -c &quot;nova-manage cell_v2 create_cell --name=cell1 --verbose&quot; nova
+
+# 初始化nova数据库
+$ su -s /bin/sh -c &quot;nova-manage db sync&quot; nova 
+# 这里遇到两个警告信息，不是很严重，后续版本会修复，再重新执行一下就不会报了
+$ su -s /bin/sh -c &quot;nova-manage db sync&quot; nova
+
+# 检查确认cell0和cell1注册成功
+$ su -s /bin/sh -c &quot;nova-manage cell_v2 list_cells&quot; nova
+
+# 验证数据库
+$ mysql -unova -pnova -e &quot;use nova_api;show tables;&quot;
+$ mysql -uplacement -pplacement -e &quot;use placement;show tables;&quot;
+
+</pre></div>
+</div>
+<p>Step 5: 重启服务</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ systemctl start openstack-nova-api.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service
+$ systemctl status openstack-nova-api.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service
+$ systemctl enable openstack-nova-api.service openstack-nova-scheduler.service openstack-nova-conductor.service openstack-nova-novncproxy.service
+$ systemctl list-unit-files |grep openstack-nova* |grep enabled
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>3.4.2 计算节点<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>Step 1: 安装nova相关软件并修改配置文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ yum install openstack-nova-compute -y
+$ yum install python-openstackclient openstack-selinux -y
+$ yum install openstack-utils -y
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 修改/etc/nova/nova.conf
+
+$ touch compute-node-nova.conf.sh
+$ vim compute-node-nova.conf.sh
+$ bash compute-node-nova.conf.sh
+
+--------------------compute-node-nova.conf.sh-----------------------
+#!/bin/bash
+#compute-node-nova.conf.sh
+openstack-config --set  /etc/nova/nova.conf DEFAULT my_ip 192.168.232.111
+openstack-config --set  /etc/nova/nova.conf DEFAULT use_neutron True
+openstack-config --set  /etc/nova/nova.conf DEFAULT firewall_driver nova.virt.firewall.NoopFirewallDriver
+openstack-config --set  /etc/nova/nova.conf DEFAULT enabled_apis  osapi_compute,metadata
+openstack-config --set  /etc/nova/nova.conf DEFAULT transport_url  rabbit://openstack:openstack@controller
+
+openstack-config --set  /etc/nova/nova.conf api auth_strategy  keystone 
+
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken www_authenticate_uri http://controller:5000/
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken auth_url http://controller:5000/
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken memcached_servers controller:11211
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken auth_type password
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken project_domain_name default
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken user_domain_name default
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken project_name  service
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken username nova
+openstack-config --set  /etc/nova/nova.conf keystone_authtoken password nova
+
+openstack-config --set  /etc/nova/nova.conf vnc enabled True
+openstack-config --set  /etc/nova/nova.conf vnc server_listen 0.0.0.0
+openstack-config --set  /etc/nova/nova.conf vnc server_proxyclient_address  &#39;$my_ip&#39;
+openstack-config --set  /etc/nova/nova.conf vnc novncproxy_base_url  http://controller:6080/vnc_auto.html
+
+openstack-config --set  /etc/nova/nova.conf glance api_servers http://controller:9292
+
+openstack-config --set  /etc/nova/nova.conf oslo_concurrency lock_path /var/lib/nova/tmp
+
+openstack-config --set  /etc/nova/nova.conf placement region_name RegionOne
+openstack-config --set  /etc/nova/nova.conf placement project_domain_name Default
+openstack-config --set  /etc/nova/nova.conf placement project_name service
+openstack-config --set  /etc/nova/nova.conf placement auth_type password
+openstack-config --set  /etc/nova/nova.conf placement user_domain_name Default
+openstack-config --set  /etc/nova/nova.conf placement auth_url http://controller:5000/v3
+openstack-config --set  /etc/nova/nova.conf placement username placement
+openstack-config --set  /etc/nova/nova.conf placement password placement
+
+echo &quot;Result of Configuration&quot;
+egrep -v &quot;^#|^$&quot; /etc/nova/nova.conf
+----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>注：Configure the [neutron] section of /etc/nova/nova.conf. Refer to the Networking service install guide for more details.
+服务器组件监听本机所有的网卡的 IP 地址，而代理组件仅仅监听本机作为计算节点管理网络接口的 IP 地址。
+在安装完成后注意修改：novncproxy_base_url为IP地址，IP地址为供应商地址，当除了管理网以外有多个IP地址时，选择合适的作为外部访问地址。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ openstack-config --set  /etc/nova/nova.conf vnc novncproxy_base_url  http://192.168.232.101:6080/vnc_auto.html
+</pre></div>
+</div>
+<p>Step 2: 确认计算节点是否支持虚拟机的硬件加速</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 确定您的计算节点是否支持虚拟机的硬件加速，
+$ egrep -c &#39;(vmx|svm)&#39; /proc/cpuinfo
+
+# 如果返回值为0，则表示计算节点不支持硬件加速，并且需要配置libvirt为使用QEMU
+# 如果在VMware中搭建OpenStack，也需要配置libvirt为qemu。
+$ openstack-config --set  /etc/nova/nova.conf libvirt virt_type  qemu
+$ egrep -v &quot;^#|^$&quot; /etc/nova/nova.conf|grep &#39;virt_type&#39;
+
+# 如果返回为其他值，表示计算节点支持硬件加速且通常不需要额外的配置
+$ openstack-config --set  /etc/nova/nova.conf libvirt virt_type  kvm 
+$ egrep -v &quot;^#|^$&quot; /etc/nova/nova.conf|grep &#39;virt_type&#39;
+
+</pre></div>
+</div>
+<p>Step 3: 启动计算服务并配置为开机自启</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ systemctl start libvirtd.service openstack-nova-compute.service 
+$ systemctl status libvirtd.service openstack-nova-compute.service
+$ systemctl enable libvirtd.service openstack-nova-compute.service
+$ systemctl list-unit-files |grep libvirtd.service
+$ systemctl list-unit-files |grep openstack-nova-compute.service
+</pre></div>
+</div>
+<p>如果nova-compute服务无法启动，请检查 /var/log/nova/nova-compute.log。<br />
+该错误消息可能表明控制器节点上的防火墙阻止访问端口5672。将控制节点防火墙配置为打开控制器节点上的端口5672，并重新启动计算节点上的服务。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 控制节点
+$ systemctl stop firewalld.service
+$ systemctl disable firewalld.service
+$ systemctl status firewalld.service
+
+$ systemctl restart rabbit_server.service
+$ systemctl restart rabbitmq-server.service
+$ systemctl status rabbitmq-server.service
+$ firewall-cmd --zone=public --add-port=5672/tcp --permanent
+$ systemctl restart firewalld
+$ firewall-cmd --zone=public --query-port=5672/tcp
+
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>3.4.3 验证<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p><strong>控制节点：</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#确认数据库中有计算主机
+$ cd
+$ source admin-openrc.sh
+$ openstack compute service list --service nova-compute
+
+# 发现计算主机
+$ su -s /bin/sh -c &quot;nova-manage cell_v2 discover_hosts --verbose&quot; nova
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 加载管理员权限
+$ cd 
+$ source admin-openrc.sh
+
+# 列出服务组件
+$ openstack compute service list
+
+# 列出身份服务中的API端点
+$ openstack catalog list
+
+# 检查nova各组件的状态
+$ openstack image list
+
+# 检查nova各组件的状态
+$ nova-status upgrade check
+
+</pre></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -354,6 +643,22 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.4.1 控制节点</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.4.2 计算节点</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.4.3 验证</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

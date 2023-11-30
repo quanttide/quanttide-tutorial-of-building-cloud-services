@@ -25,20 +25,21 @@
      2.3.4 免密交互
      2.3.5 时间同步 (NTP)
    2.4 安装必要的软件和工具
-     2.3.1 Openstack工具包
-     2.3.2 MySQL服务
-     2.3.3 Message Queue服务
-     2.3.4 MEMCACHED
-     2.3.5 Etcd服务
+     2.4.1 Openstack工具包
+     2.4.2 MySQL服务
+     2.4.3 Message Queue服务
+     2.4.4 MEMCACHED
+     2.4.5 Etcd服务
  3. 安装 OpenStack 核心组件  
    3.1 安装 Keystone（身份认证服务）   
    3.2 安装 Glance（镜像服务） 
    3.3 安装Placement（资源管理服务） 
    3.4 安装 Nova（计算服务）  
-     3.3.1 控制节点
-     3.3.2 计算节点
-     3.3.3 验证
-   3.5 安装 Neutron（网络服务）  
      3.4.1 控制节点
      3.4.2 计算节点
+     3.4.3 验证
+   3.5 安装 Neutron（网络服务）  
+     3.5.1 控制节点
+     3.5.2 计算节点
+     3.5.3 验证
    3.6 安装 Horizon（面板服务）

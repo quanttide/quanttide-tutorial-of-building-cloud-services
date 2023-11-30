@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>部署OpenStack &#8212; 量潮云服务研发教程</title>
+    <title>附录1：虚拟机创建和系统安装 &#8212; 量潮云服务研发教程</title>
   
   
   
@@ -62,11 +62,9 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'deploying_openstack/README';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'deploying_openstack/Appendix 1_ Create Virtual Machine';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="部署kubernetes" href="../deploying_k8s/README.html" />
-    <link rel="prev" title="引言" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -163,8 +161,8 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">IaaS</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">部署OpenStack</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="README.html">部署OpenStack</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deploying_k8s/README.html">部署kubernetes</a></li>
 </ul>
 
@@ -220,7 +218,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/deploying_openstack/README.md" target="_blank"
+      <li><a href="../_sources/deploying_openstack/Appendix 1_ Create Virtual Machine.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -291,9 +289,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -304,19 +300,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>部署OpenStack</h1>
+    <h1>附录1：虚拟机创建和系统安装</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">目录（暂定）</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -326,49 +314,48 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="openstack">
-<h1>部署OpenStack<a class="headerlink" href="#openstack" title="Permalink to this heading">#</a></h1>
-<p>随着云计算技术的不断发展，OpenStack 作为一款开源的云计算平台，越来越多地受到业界关注和应用。OpenStack 提供了计算、存储、网络和身份认证等基础设施服务，帮助企业轻松搭建私有云，实现云计算资源的快速部署和管理。</p>
-<p>本教程旨在为 OpenStack 初学者提供一份详细的部署指南，让您快速掌握 OpenStack 的安装、配置及使用方法。通过本教程，您将了解到 OpenStack 各个核心组件的作用，以及如何在 CentOS 7 操作系统上部署 OpenStack 并完成相关配置。此外，本教程还将介绍 OpenStack 的高可用性、负载均衡、备份与恢复等方面的知识，帮助您构建一个稳定、可靠的 OpenStack 私有云平台。</p>
-<p>在学习本教程之前，您需要具备一定的 Linux 操作系统基础，以及对 OpenStack 核心组件和架构的基本了解。通过学习本教程，您将能够独立部署和维护 OpenStack 私有云，为您的企业提供高效、灵活的云计算服务。</p>
-<p>请您跟随本教程的步骤，一起探索 OpenStack 部署的奥秘，开启您的 OpenStack 学习之旅吧！</p>
-<section id="id1">
-<h2>目录（暂定）<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>附录1：虚拟机创建和系统安装<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>本教程采用的是VM Station软件</p>
 <ol class="arabic simple">
-<li><p>引言<br />
-1.1 OpenStack 简介<br />
-1.2 OpenStack 的核心组件<br />
-1.3 OpenStack 部署的意义和目的</p></li>
-<li><p>准备环境<br />
-2.1 硬件和网络规划部署
-2.2 操作系统选择与版本
-2.3 环境配置
-2.3.1 修改主机名并关闭防火墙
-2.3.2 网卡设置
-2.3.3 节点映射
-2.3.4 免密交互
-2.3.5 时间同步 (NTP)
-2.4 安装必要的软件和工具
-2.4.1 Openstack工具包
-2.4.2 MySQL服务
-2.4.3 Message Queue服务
-2.4.4 MEMCACHED
-2.4.5 Etcd服务</p></li>
-<li><p>安装 OpenStack 核心组件<br />
-3.1 安装 Keystone（身份认证服务）<br />
-3.2 安装 Glance（镜像服务）
-3.3 安装Placement（资源管理服务）
-3.4 安装 Nova（计算服务）<br />
-3.4.1 控制节点
-3.4.2 计算节点
-3.4.3 验证
-3.5 安装 Neutron（网络服务）<br />
-3.5.1 控制节点
-3.5.2 计算节点
-3.5.3 验证
-3.6 安装 Horizon（面板服务）</p></li>
+<li><p>创建虚拟机</p></li>
 </ol>
-</section>
+<p><img alt="" src="../_images/1.png" /></p>
+<p><img alt="" src="../_images/2.png" /></p>
+<p><img alt="" src="../_images/3.png" /></p>
+<p><img alt="" src="../_images/4.png" /></p>
+<p><img alt="" src="../_images/5.png" /></p>
+<p><img alt="" src="../_images/6.png" /></p>
+<p><img alt="" src="../_images/7.png" /></p>
+<p><img alt="" src="../_images/8.png" /></p>
+<p><img alt="" src="../_images/9.png" /></p>
+<p><img alt="" src="../_images/10.png" /></p>
+<p><img alt="" src="../_images/11.png" /></p>
+<p><img alt="" src="../_images/12.png" /></p>
+<p><img alt="" src="../_images/13.png" /></p>
+<p><img alt="" src="../_images/14.png" /></p>
+<p>2.创建完虚拟机后，点击“虚拟机设置”进行修改。</p>
+<p>首先，点击处理器，勾选虚拟化。</p>
+<p><img alt="" src="../_images/15.png" /></p>
+<p>然后，点击“CD/DVD”，选择iso系统安装文件所谓位置，本教程采用的是Centos7.9 Minimal版本。</p>
+<p><img alt="" src="../_images/16.png" /></p>
+<p>最后，点击“添加”，增加一个网络适配器。最终配置如下：</p>
+<p><img alt="" src="../_images/17.png" /></p>
+<ol class="arabic simple" start="3">
+<li><p>安装系统。开启虚拟机，选择语言。</p></li>
+</ol>
+<p><img alt="" src="../_images/18.png" /></p>
+<p>然后，点击“安装位置”进行磁盘分区。</p>
+<p><img alt="" src="../_images/19.png" /></p>
+<p>选择下面的“我要配置分区”，然后点击“完成”。</p>
+<p><img alt="" src="../_images/20.png" /></p>
+<p>点击“自动创建”，再点完成。</p>
+<p><img alt="" src="../_images/21.png" /></p>
+<p>点击“接受更改”，然后返回到主界面点击“继续安装”。</p>
+<p><img alt="" src="../_images/22.png" /></p>
+<p>点击root密码进行设置。</p>
+<p><img alt="" src="../_images/23.png" /></p>
+<p>之后，等待系统安装完成重启虚拟机即可。</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -401,44 +388,12 @@ document.write(`
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../index.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">引言</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../deploying_k8s/README.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">部署kubernetes</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">目录（暂定）</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

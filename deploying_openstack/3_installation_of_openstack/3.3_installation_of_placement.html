@@ -316,6 +316,110 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="placement">
 <h1>3.3 安装Placement（资源管理服务）<a class="headerlink" href="#placement" title="Permalink to this heading">#</a></h1>
+<p>Step 1: 创建数据库并授权</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 登录mysql控制台，mysql -u root -pMariaDB密码，本教程采用的是root</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">proot</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 创建glance数据库</span>
+<span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">placement</span><span class="p">;</span>
+
+<span class="c1"># 授权本地访问</span>
+<span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">placement</span><span class="o">.*</span> <span class="n">TO</span> <span class="s1">&#39;placement&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;placement&#39;</span><span class="p">;</span>
+
+<span class="c1"># 授权所有任意主机访问</span>
+<span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">PRIVILEGES</span> <span class="n">ON</span> <span class="n">placement</span><span class="o">.*</span> <span class="n">TO</span> <span class="s1">&#39;placement&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="s1">&#39;placement&#39;</span><span class="p">;</span>
+
+<span class="c1"># 刷新权限</span>
+<span class="o">&gt;</span> <span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+<span class="c1"># 查看数据库是否创建成功</span>
+<span class="o">&gt;</span> <span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
+<span class="c1"># 查看拥有访问权限的主机</span>
+<span class="o">&gt;</span> <span class="n">select</span> <span class="n">user</span><span class="p">,</span><span class="n">host</span> <span class="kn">from</span> <span class="nn">mysql.user</span><span class="p">;</span>
+<span class="c1"># 退出mysql控制台</span>
+<span class="o">&gt;</span> <span class="n">exit</span>
+</pre></div>
+</div>
+<p>Step 2: 创建服务凭据</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 获取管理员权限
+$ cd 
+$ source admin-openrc.sh
+
+# 创建placement用户
+$ openstack user create --domain default --password=placement placement
+# 赋予placement用户管理员角色
+$ openstack role add --project service --user placement admin
+# 创建placement服务实体
+$ openstack service create --name placement --description &quot;Placement API&quot; placement
+
+</pre></div>
+</div>
+<p>Step 3: 创建placement项目的endpoint（API端口）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ openstack endpoint create --region RegionOne placement public http://controller:8778
+$ openstack endpoint create --region RegionOne placement internal http://controller:8778
+$ openstack endpoint create --region RegionOne placement admin http://controller:8778
+
+# 查看API端点
+$ openstack endpoint list
+</pre></div>
+</div>
+<p>Step 4: 安装Placement相关软件并修改配置文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ yum install openstack-placement-api -y
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 修改placememt.conf文件
+$ touch placement.conf.sh
+$ vim placement.conf.sh
+$ bash placement.conf.sh
+
+-----------placement.conf.sh--------------------
+#!/bin/bash
+#placement.conf.sh
+openstack-config --set  /etc/placement/placement.conf api auth_strategy  keystone 
+openstack-config --set  /etc/placement/placement.conf keystone_authtoken auth_url  http://controller:5000/v3
+openstack-config --set  /etc/placement/placement.conf keystone_authtoken memcached_servers  controller:11211
+openstack-config --set  /etc/placement/placement.conf keystone_authtoken auth_type  password
+openstack-config --set  /etc/placement/placement.conf keystone_authtoken project_domain_name  default 
+openstack-config --set  /etc/placement/placement.conf keystone_authtoken user_domain_name  default
+openstack-config --set  /etc/placement/placement.conf keystone_authtoken project_name  service 
+openstack-config --set  /etc/placement/placement.conf keystone_authtoken username  placement 
+openstack-config --set  /etc/placement/placement.conf keystone_authtoken password  placement  
+openstack-config --set  /etc/placement/placement.conf placement_database connection  mysql+pymysql://placement:placement@controller/placement
+
+echo &quot;Result of Configuration&quot;
+grep &#39;^[a-z]&#39; /etc/placement/placement.conf
+------------------------------------------------
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 修改nova的虚拟主机配置文件
+$ vim /etc/httpd/conf.d/00-placement-api.conf
+
+----------00-placement-api.conf-----------
+# 在文件末尾添加如下内容
+&lt;Directory /usr/bin&gt;
+   &lt;IfVersion &gt;= 2.4&gt;
+      Require all granted
+   &lt;/IfVersion&gt;
+   &lt;IfVersion &lt; 2.4&gt;
+      Order allow,deny
+      Allow from all
+   &lt;/IfVersion&gt;
+   
+&lt;/Directory&gt;
+--------------------------------------------
+</pre></div>
+</div>
+<p>Step 5: 同步数据库并重启服务</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ su -s /bin/sh -c &quot;placement-manage db sync&quot; placement
+#如有警告，再执行一遍
+
+$ mysql -uplacement -pplacement -e &quot;use placement;show tables;&quot;
+
+$ systemctl restart httpd
+$ systemctl status httpd 
+</pre></div>
+</div>
+<p>如果httpd服务重启失败，请检查防火墙是否关闭或者是配置文件里mysql数据库的密码是否与创建数据库信息填写一致。</p>
 </section>
 
     <script type="text/x-thebe-config">
